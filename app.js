@@ -53,10 +53,25 @@ var options = {
   month: "long"
 }
 
-var day = today.toLocaleDateString("en-IN", options);
+
+var tempDay="";
+var day =today.toLocaleDateString("en-IN", options);
+
+
 
 
 app.get("/", function(req, res) {
+  if(tempDay!=day){
+    tempDay=day;
+    Item.deleteMany({},function(err){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log("Deleted all documents")
+      }
+    });
+  }
 
 
   Item.find({},function (err,results) {
